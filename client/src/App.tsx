@@ -200,7 +200,7 @@ function App() {
   const basePath = (import.meta.env.BASE_URL || '/').replace(/\/$/, '') || '/';
   
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+    <ThemeProvider attribute="class" defaultTheme="light">
       <QueryClientProvider client={queryClient}>
         <Router base={basePath === '/' ? undefined : basePath}>
           <AuthProvider>
