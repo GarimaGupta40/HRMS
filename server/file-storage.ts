@@ -139,11 +139,21 @@ export class FileStorage implements IStorage {
       const fileContent = await fs.readFile(this.dataFilePath, 'utf-8');
       this.data = JSON.parse(fileContent);
 
-      // Convert date strings back to Date objects
-      this.data.users = this.data.users.map(user => ({
-        ...user,
-        joinDate: user.joinDate ? new Date(user.joinDate) : new Date()
-      }));
+      // Convert date strings back to Date objects and ensure unitId is populated
+      this.data.users = this.data.users.map(user => {
+        let unitId = user.unitId ?? null;
+        if (!unitId && user.departmentId) {
+          const dept = this.data.departments.find(d => d.id === user.departmentId);
+          if (dept && dept.unitId) {
+            unitId = dept.unitId;
+          }
+        }
+        return {
+          ...user,
+          unitId,
+          joinDate: user.joinDate ? new Date(user.joinDate) : new Date()
+        };
+      });
 
       this.data.attendanceRecords = this.data.attendanceRecords.map(record => ({
         ...record,
@@ -376,6 +386,7 @@ export class FileStorage implements IStorage {
       ...insertUser,
       id,
       joinDate: insertUser.joinDate || new Date(),
+      unitId: insertUser.unitId ?? (insertUser.departmentId ? this.data.departments.find(d => d.id === insertUser.departmentId)?.unitId ?? null : null),
       departmentId: insertUser.departmentId ?? null,
       position: insertUser.position ?? null,
       phoneNumber: insertUser.phoneNumber ?? null,

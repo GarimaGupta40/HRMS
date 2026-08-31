@@ -91,7 +91,8 @@ export default function AttendanceReportPage() {
   const filteredEmployees = useMemo(() => {
     return employees.filter((emp: User) => {
       const dept = departments.find(d => d.id == emp.departmentId);
-      const matchesUnit = !selectedUnit || (dept && String(dept.unitId) === selectedUnit);
+      const empUnitId = emp.unitId ?? dept?.unitId;
+      const matchesUnit = !selectedUnit || (empUnitId != null && String(empUnitId) === selectedUnit);
       const matchesDept = selectedDept === 'all' || String(emp.departmentId) === selectedDept;
       const empIdFormatted = `EMP${String(emp.id).padStart(3, '0')}`;
       const matchesSearch = searchQuery === "" ||

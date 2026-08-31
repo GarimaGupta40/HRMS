@@ -116,7 +116,8 @@ export default function EmployeesPage() {
   const filteredEmployees = employees.filter((employee) => {
     const searchLower = searchQuery.toLowerCase();
     const dept = departments.find(d => d.id === employee.departmentId);
-    const matchesUnit = !selectedUnit || selectedUnit === "all" || (dept && String(dept.unitId) === selectedUnit);
+    const empUnitId = employee.unitId ?? dept?.unitId;
+    const matchesUnit = !selectedUnit || selectedUnit === "all" || (empUnitId != null && String(empUnitId) === selectedUnit);
     const matchesSearch = (
       employee.firstName.toLowerCase().includes(searchLower) ||
       employee.lastName.toLowerCase().includes(searchLower) ||

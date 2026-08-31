@@ -570,12 +570,16 @@ export class MemStorage implements IStorage {
   }
 
   // For initializing users with pre-hashed passwords
-  private initializeUser(user: User) {
-    this.users.set(user.id, user);
-    if (user.id >= this.currentUserId) {
-      this.currentUserId = user.id + 1;
+  private initializeUser(user: any) {
+    const userWithUnit: User = {
+      ...user,
+      unitId: user.unitId ?? (user.departmentId ? this.departments.get(user.departmentId)?.unitId ?? null : null)
+    };
+    this.users.set(userWithUnit.id, userWithUnit);
+    if (userWithUnit.id >= this.currentUserId) {
+      this.currentUserId = userWithUnit.id + 1;
     }
-    return user;
+    return userWithUnit;
   }
 
 
@@ -819,6 +823,7 @@ export class MemStorage implements IStorage {
       joinDate: insertUser.joinDate || new Date(),
       isActive: true,
       role: insertUser.role || 'employee',
+      unitId: insertUser.unitId ?? (insertUser.departmentId ? this.departments.get(insertUser.departmentId)?.unitId ?? null : null),
       departmentId: insertUser.departmentId ?? null,
       position: insertUser.position ?? null,
       phoneNumber: insertUser.phoneNumber ?? null,

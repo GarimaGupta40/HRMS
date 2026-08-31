@@ -25,6 +25,7 @@ interface Employee {
   employeeId: string;
   position: string;
   departmentId: number;
+  unitId?: number | null;
   joinDate?: string;
   basicSalary?: number;
   salary?: number;
@@ -84,9 +85,9 @@ export default function LeaveRegisterPage() {
   const filteredEmployees = useMemo(() => {
     return employees.filter(emp => {
       const dept = departments.find(d => d.id === emp.departmentId);
-      const unit = units.find(u => u.id === dept?.unitId);
+      const empUnitId = emp.unitId ?? dept?.unitId;
 
-      const matchesUnit = !selectedUnit || unit?.id.toString() === selectedUnit;
+      const matchesUnit = !selectedUnit || String(empUnitId) === selectedUnit;
       const matchesDept = selectedDepartment === "all" || String(dept?.id) === selectedDepartment;
 
       return matchesUnit && matchesDept;

@@ -197,7 +197,8 @@ export default function ShiftsPage() {
       base = base.filter(schedule => {
         const emp = employees.find(e => e.id === schedule.id);
         const dept = emp ? departments.find(d => d.id === emp.departmentId) : null;
-        return dept?.unitId === unitId;
+        const empUnitId = emp?.unitId ?? dept?.unitId;
+        return empUnitId === unitId;
       });
     }
     if (searchTerm) {

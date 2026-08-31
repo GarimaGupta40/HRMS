@@ -124,6 +124,7 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
       ? z.string().optional()
       : z.string().min(6, "Password must be at least 6 characters"),
     role: z.enum(['admin', 'hr', 'manager', 'employee', 'developer']),
+    unitId: z.number().nullable().optional(),
     departmentId: z.number().nullable(),
     position: z.string().optional(),
     joinDate: z.date().optional(),
@@ -160,6 +161,7 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
       username: employee?.username || "",
       password: isEditing ? "" : "",
       role: employee?.role || "employee",
+      unitId: employee?.unitId || (employee?.departmentId ? departments.find(d => d.id === employee.departmentId)?.unitId || null : null),
       departmentId: employee?.departmentId || null,
       position: employee?.position || "",
       joinDate: employee?.joinDate ? new Date(employee.joinDate) : undefined,
@@ -224,8 +226,13 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
   const handleSave = () => {
     form.handleSubmit(
       (values) => {
+        const determinedUnitId = selectedCompanyUnitId !== "all"
+          ? parseInt(selectedCompanyUnitId)
+          : (values.unitId || employee?.unitId || (values.departmentId ? departments.find(d => d.id === values.departmentId)?.unitId || null : null));
+
         const submissionValues = {
           ...values,
+          unitId: determinedUnitId,
           documents: uploadedDocuments.map((doc) => JSON.stringify(doc)),
         };
         mutation.mutate(submissionValues);
@@ -492,9 +499,14 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
   const onSubmit = (values: FormValues) => {
     // Only allow submission on the final step
     if (currentStep === totalSteps) {
+      const determinedUnitId = selectedCompanyUnitId !== "all"
+        ? parseInt(selectedCompanyUnitId)
+        : (values.unitId || employee?.unitId || (values.departmentId ? departments.find(d => d.id === values.departmentId)?.unitId || null : null));
+
       // Ensure documents from state are included in the submission
       const submissionValues = {
         ...values,
+        unitId: determinedUnitId,
         documents: uploadedDocuments.map(doc => JSON.stringify(doc)),
       };
       mutation.mutate(submissionValues);

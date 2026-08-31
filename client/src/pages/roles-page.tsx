@@ -37,6 +37,7 @@ type User = {
   role: string;
   position: string;
   departmentId: number | null;
+  unitId?: number | null;
   isActive: boolean;
   customPermissions?: string[];
 };
@@ -112,7 +113,8 @@ export default function RolesPage() {
       let matchesUnit = true;
       if (selectedUnit !== "all") {
         const dept = departments.find(d => d.id === user.departmentId);
-        matchesUnit = dept?.unitId === parseInt(selectedUnit);
+        const empUnitId = user.unitId ?? dept?.unitId;
+        matchesUnit = empUnitId === parseInt(selectedUnit);
       }
 
       return matchesSearch && matchesDept && matchesUnit;
