@@ -251,7 +251,7 @@ export default function PayrollPage() {
     basicSalaryPercentage: 50,
     hraPercentage: 50,
     epfPercentage: 12,
-    esicPercentage: 2.5,
+    esicPercentage: 0.75,
     professionalTax: 200
   };
 
@@ -1610,7 +1610,7 @@ export default function PayrollPage() {
                         <span className="font-medium" data-testid="text-epf">₹{userSalaryBreakdown.epf.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between py-2 border-b border-red-100" data-testid="row-esic">
-                        <span className="text-slate-600">ESIC (0.75%):</span>
+                        <span className="text-slate-600">ESIC ({currentSalaryComponents.esicPercentage || 0.75}%):</span>
                         <span className="font-medium" data-testid="text-esic">₹{userSalaryBreakdown.esic.toLocaleString()}</span>
                       </div>
                       <div className="flex justify-between py-2 border-b border-red-100" data-testid="row-professional-tax">
@@ -2662,7 +2662,7 @@ export default function PayrollPage() {
                                         basicSalaryPercentage: 50,
                                         hraPercentage: 50,
                                         epfPercentage: 12,
-                                        esicPercentage: 2.5,
+                                        esicPercentage: 0.75,
                                         professionalTax: 200
                                       };
                                       salaryForm.reset(defaults);

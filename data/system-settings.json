@@ -23,7 +23,7 @@
     "basicSalaryPercentage": 50,
     "hraPercentage": 50,
     "epfPercentage": 12,
-    "esicPercentage": 2.5,
+    "esicPercentage": 0.75,
     "professionalTax": 200
   }
 }
