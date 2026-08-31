@@ -573,6 +573,8 @@ export default function EmployeesPage() {
             <MultiStepEmployeeForm
               employee={selectedEmployee}
               departments={departments}
+              units={units}
+              selectedUnit={selectedUnit}
               onSuccess={() => {
                 setIsEditOpen(false);
                 queryClient.invalidateQueries({ queryKey: ["/api/employees"] });

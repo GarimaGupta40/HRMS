@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -187,9 +187,66 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
   const dateOfBirth = form.watch("dateOfBirth");
   const age = calculateAge(dateOfBirth);
 
-  const filteredDepartments = selectedUnit === "all" 
-    ? departments 
-    : departments.filter(d => String(d.unitId) === selectedUnit);
+  // Track selected company/unit for department filtering
+  const [selectedCompanyUnitId, setSelectedCompanyUnitId] = useState<string>(() => {
+    if (employee?.departmentId) {
+      const empDept = departments.find(d => d.id === employee.departmentId);
+      if (empDept?.unitId) return String(empDept.unitId);
+    }
+    if (selectedUnit && selectedUnit !== "all") return selectedUnit;
+    if (units && units.length > 0) return String(units[0].id);
+    return "all";
+  });
+
+  // Sync unit state if employee or selectedUnit changes
+  useEffect(() => {
+    if (employee?.departmentId) {
+      const empDept = departments.find(d => d.id === employee.departmentId);
+      if (empDept?.unitId) {
+        setSelectedCompanyUnitId(String(empDept.unitId));
+        return;
+      }
+    }
+    if (selectedUnit && selectedUnit !== "all") {
+      setSelectedCompanyUnitId(selectedUnit);
+    }
+  }, [employee?.id, employee?.departmentId, departments, selectedUnit]);
+
+  // Compute departments belonging to the selected company/unit only
+  const filteredDepartments = useMemo(() => {
+    if (!selectedCompanyUnitId || selectedCompanyUnitId === "all") {
+      return departments;
+    }
+    return departments.filter(d => String(d.unitId) === selectedCompanyUnitId);
+  }, [departments, selectedCompanyUnitId]);
+
+  // Dedicated save handler for editing profile
+  const handleSave = () => {
+    form.handleSubmit(
+      (values) => {
+        const submissionValues = {
+          ...values,
+          documents: uploadedDocuments.map((doc) => JSON.stringify(doc)),
+        };
+        mutation.mutate(submissionValues);
+      },
+      (errors) => {
+        const errorFields = Object.keys(errors);
+        const step1Fields = ['firstName', 'lastName', 'email', 'dateOfBirth'];
+        const step2Fields = ['username', 'password', 'role', 'salary'];
+        const hasStep1Error = errorFields.some((f) => step1Fields.includes(f));
+        const hasStep2Error = errorFields.some((f) => step2Fields.includes(f));
+        if (hasStep1Error) setCurrentStep(1);
+        else if (hasStep2Error) setCurrentStep(2);
+
+        toast({
+          title: "Validation Error",
+          description: "Please check all required fields in each section before saving.",
+          variant: "destructive",
+        });
+      }
+    )();
+  };
 
   // Auto-fill logic based on selectedUnit
   useEffect(() => {
@@ -505,23 +562,7 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
                 size="sm"
                 className="mt-2 bg-teal-600 hover:bg-teal-700 h-8 px-4 text-xs font-bold shadow-sm"
                 disabled={mutation.isPending}
-                onClick={() => {
-                  form.handleSubmit(onSubmit, (errors) => {
-                    const errorFields = Object.keys(errors);
-                    const step1Fields = ['firstName', 'lastName', 'email', 'dateOfBirth'];
-                    const step2Fields = ['username', 'password', 'role', 'salary'];
-                    const hasStep1Error = errorFields.some(f => step1Fields.includes(f));
-                    const hasStep2Error = errorFields.some(f => step2Fields.includes(f));
-                    if (hasStep1Error) setCurrentStep(1);
-                    else if (hasStep2Error) setCurrentStep(2);
-                    
-                    toast({
-                      title: "Validation Error",
-                      description: "Please check all required fields in each section.",
-                      variant: "destructive",
-                    });
-                  })();
-                }}
+                onClick={handleSave}
               >
                 {mutation.isPending && <Loader2 className="mr-1.5 h-3 w-3 animate-spin" />}
                 Save Changes
@@ -955,8 +996,39 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
                           />
                         </div>
 
-                        {/* Department & Work Location Row */}
+                        {/* Company Unit & Department Row */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                          {units && units.length > 0 && (
+                            <div>
+                              <FormLabel className="text-sm font-semibold text-gray-700 mb-2 block">Company / Unit</FormLabel>
+                              <Select 
+                                value={selectedCompanyUnitId} 
+                                onValueChange={(val) => {
+                                  setSelectedCompanyUnitId(val);
+                                  const deptsInUnit = val === "all" ? departments : departments.filter(d => String(d.unitId) === val);
+                                  const currentDeptId = form.getValues("departmentId");
+                                  if (currentDeptId && !deptsInUnit.some(d => d.id === currentDeptId)) {
+                                    form.setValue("departmentId", deptsInUnit.length > 0 ? deptsInUnit[0].id : null);
+                                  }
+                                }}
+                              >
+                                <FormControl>
+                                  <SelectTrigger className="h-12 border border-gray-300 focus:border-blue-500 rounded-xl font-medium transition-all duration-200 bg-white">
+                                    <SelectValue placeholder="Select company / unit" />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="all">All Companies / Units</SelectItem>
+                                  {units.map((unit) => (
+                                    <SelectItem key={unit.id} value={unit.id.toString()}>
+                                      {unit.name} ({unit.code})
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            </div>
+                          )}
+
                           <FormField
                             control={form.control}
                             name="departmentId"
@@ -985,7 +1057,10 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
                               </FormItem>
                             )}
                           />
+                        </div>
 
+                        {/* Work Location Row */}
+                        <div className="grid grid-cols-1 gap-6">
                           <FormField
                             control={form.control}
                             name="workLocation"
@@ -1196,7 +1271,7 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
                               </FormControl>
                               <SelectContent>
                                 <SelectItem value="none">No Department Assigned</SelectItem>
-                                {departments.map((department) => (
+                                {filteredDepartments.map((department) => (
                                   <SelectItem key={department.id} value={department.id.toString()}>
                                     {department.name}
                                   </SelectItem>
@@ -1614,22 +1689,7 @@ export function MultiStepEmployeeForm({ employee, departments, units = [], selec
               type="button"
               className="w-full sm:w-auto bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white shadow-lg transition-all duration-200 font-bold px-8"
               disabled={mutation.isPending}
-              onClick={() => {
-                form.handleSubmit(onSubmit, (errors) => {
-                  const errorFields = Object.keys(errors);
-                  const step1Fields = ['firstName', 'lastName', 'email', 'dateOfBirth'];
-                  const step2Fields = ['username', 'password', 'role', 'salary'];
-                  
-                  if (errorFields.some(f => step1Fields.includes(f))) setCurrentStep(1);
-                  else if (errorFields.some(f => step2Fields.includes(f))) setCurrentStep(2);
-                  
-                  toast({
-                    title: "Missing Information",
-                    description: "Please complete all required fields in each section before saving.",
-                    variant: "destructive",
-                  });
-                })();
-              }}
+              onClick={handleSave}
             >
               {mutation.isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
               {isEditing ? "Update Employee Profile" : "Complete Registration"}

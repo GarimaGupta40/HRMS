@@ -254,7 +254,7 @@
       "maritalStatus": null,
       "photoUrl": "",
       "role": "manager",
-      "departmentId": 2,
+      "departmentId": 4,
       "position": "Senior Software Engineer",
       "joinDate": "2026-03-31T11:10:57.000Z",
       "workLocation": "",
@@ -285,7 +285,8 @@
         "{\"id\":\"seed-69e72c238e5df\",\"name\":\"Government ID\",\"type\":\"id_proof\",\"description\":\"Automatically generated sample document for demonstration purposes.\",\"fileName\":\"government_id.pdf\",\"fileSize\":56067,\"mimeType\":\"application/pdf\",\"data\":\"data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1MDAgMjAwXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAgUiA+PiA+PiAvQ29udGVudHMgNSAwIFIgPj4KZW5kb2JqCjQgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggMTM1ID4+CnN0cmVhbQpCVCAKL0YxIDE4IFRmIAo1MCAxNTAgVGQgCihTYW1wbGUgRG9jdW1lbnQgUHJldmlldykgVGogCi9GMSAxMiBUZiAKMCAtMzAgVGQgCihUaGlzIGlzIGEgcmVhbCBzeXN0ZW0gZ2VuZXJhdGVkIGR1bW15IGRvY3VtZW50LikgVGogCkVUCmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmCjAwMDAwMDAwMDkgMDAwMDAgbgowMDAwMDAwMDU4IDAwMDAwIG4KMDAwMDAwMDExNSAwMDAwMCBuCjAwMDAwMDAyNDQgMDAwMDAgbgowMDAwMDAwMzMyIDAwMDAwIG4KdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo1MTcKJSVFT0Y=\",\"uploadedAt\":\"2026-03-23T13:19:55.000Z\"}",
         "{\"id\":\"seed-69e72c238e609\",\"name\":\"Training Certificate\",\"type\":\"certificate\",\"description\":\"Automatically generated sample document for demonstration purposes.\",\"fileName\":\"training_certificate.pdf\",\"fileSize\":412053,\"mimeType\":\"application/pdf\",\"data\":\"data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1MDAgMjAwXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAgUiA+PiA+PiAvQ29udGVudHMgNSAwIFIgPj4KZW5kb2JqCjQgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggMTM1ID4+CnN0cmVhbQpCVCAKL0YxIDE4IFRmIAo1MCAxNTAgVGQgCihTYW1wbGUgRG9jdW1lbnQgUHJldmlldykgVGogCi9GMSAxMiBUZiAKMCAtMzAgVGQgCihUaGlzIGlzIGEgcmVhbCBzeXN0ZW0gZ2VuZXJhdGVkIGR1bW15IGRvY3VtZW50LikgVGogCkVUCmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmCjAwMDAwMDAwMDkgMDAwMDAgbgowMDAwMDAwMDU4IDAwMDAwIG4KMDAwMDAwMDExNSAwMDAwMCBuCjAwMDAwMDAyNDQgMDAwMDAgbgowMDAwMDAwMzMyIDAwMDAwIG4KdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo1MTcKJSVFT0Y=\",\"uploadedAt\":\"2026-04-16T13:19:55.000Z\"}",
         "{\"id\":\"seed-69e72c238e61a\",\"name\":\"Degree Certificate\",\"type\":\"educational\",\"description\":\"Automatically generated sample document for demonstration purposes.\",\"fileName\":\"degree_certificate.pdf\",\"fileSize\":194787,\"mimeType\":\"application/pdf\",\"data\":\"data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFszIDAgUl0gL0NvdW50IDEgPj4KZW5kb2JqCjMgMCBvYmoKPDwgL1R5cGUgL1BhZ2UgL1BhcmVudCAyIDAgUiAvTWVkaWFCb3ggWzAgMCA1MDAgMjAwXSAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA0IDAgUiA+PiA+PiAvQ29udGVudHMgNSAwIFIgPj4KZW5kb2JqCjQgMCBvYmoKPDwgL1R5cGUgL0ZvbnQgL1N1YnR5cGUgL1R5cGUxIC9CYXNlRm9udCAvSGVsdmV0aWNhID4+CmVuZG9iago1IDAgb2JqCjw8IC9MZW5ndGggMTM1ID4+CnN0cmVhbQpCVCAKL0YxIDE4IFRmIAo1MCAxNTAgVGQgCihTYW1wbGUgRG9jdW1lbnQgUHJldmlldykgVGogCi9GMSAxMiBUZiAKMCAtMzAgVGQgCihUaGlzIGlzIGEgcmVhbCBzeXN0ZW0gZ2VuZXJhdGVkIGR1bW15IGRvY3VtZW50LikgVGogCkVUCmVuZHN0cmVhbQplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmCjAwMDAwMDAwMDkgMDAwMDAgbgowMDAwMDAwMDU4IDAwMDAwIG4KMDAwMDAwMDExNSAwMDAwMCBuCjAwMDAwMDAyNDQgMDAwMDAgbgowMDAwMDAwMzMyIDAwMDAwIG4KdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo1MTcKJSVFT0Y=\",\"uploadedAt\":\"2026-03-28T13:19:55.000Z\"}"
-      ]
+      ],
+      "bankAccountHolderName": ""
     },
     {
       "id": 7,
@@ -71436,6 +71437,17 @@
       "createdAt": "2026-08-25T06:37:39.346Z",
       "relatedUserId": null,
       "relatedLeaveId": null
+    },
+    {
+      "userId": 1,
+      "type": "login",
+      "title": "Successful Login",
+      "message": "You have successfully logged in at 8/31/2026",
+      "isRead": false,
+      "id": 456,
+      "createdAt": "2026-08-31T06:25:35.844Z",
+      "relatedUserId": null,
+      "relatedLeaveId": null
     }
   ],
   "currentUserId": 1567,
@@ -71443,7 +71455,7 @@
   "currentAttendanceId": 6513,
   "currentLeaveRequestId": 156,
   "currentHolidayId": 113,
-  "currentNotificationId": 456,
+  "currentNotificationId": 457,
   "paymentRecords": [
     {
       "id": 1,
