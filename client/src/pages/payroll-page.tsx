@@ -479,7 +479,7 @@ export default function PayrollPage() {
   };
 
   // Step 3: Calculate deductions (using dynamic percentages)
-  const calculateEPF = (basicSalary: number) => Math.round(Math.min(basicSalary || 0, 15000) * ((currentSalaryComponents.epfPercentage || 12) / 100));
+  const calculateEPF = (basicSalary: number) => (basicSalary || 0) > 15000 ? 1800 : Math.round((basicSalary || 0) * ((currentSalaryComponents.epfPercentage || 12) / 100));
   const calculateESIC = (grossSalary: number) => (grossSalary || 0) <= 21000 ? Math.round((grossSalary || 0) * ((currentSalaryComponents.esicPercentage || 0.75) / 100)) : 0;
   const calculateProfessionalTax = () => currentSalaryComponents.professionalTax || 200;
   const calculateTDS = (_grossSalary: number) => 0;
@@ -692,7 +692,7 @@ export default function PayrollPage() {
       const monthlyCTC = emp.salary || 0;
       const breakdown = getSalaryBreakdown(monthlyCTC);
       const basicSalary = breakdown.basicSalary;
-      return sum + (Math.min(basicSalary, 15000) * ((currentSalaryComponents.epfPercentage || 12) / 100)); // Employee PF (dynamic)
+      return sum + breakdown.epf; // Employee PF (dynamic)
     }, 0);
 
     const employerPFContribution = filteredSalaryEmployees.reduce((sum, emp) => {

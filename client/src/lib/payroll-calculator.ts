@@ -102,7 +102,7 @@ export function calculatePayrollBreakdown(
   // 3. Deductions components
   const pfApplicable = options.pfApplicable ?? true;
   const epfPercentage = (options.epfPercentage ?? 12) / 100;
-  const epf = pfApplicable ? Math.round(Math.min(basicSalary, 15000) * epfPercentage) : 0;
+  const epf = pfApplicable ? (basicSalary > 15000 ? 1800 : Math.round(basicSalary * epfPercentage)) : 0;
 
   const esicApplicable = options.esicApplicable ?? true;
   const esicRate = (options.esicPercentage ?? 0.75) / 100;

@@ -137,9 +137,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const specialAllowance = Math.max(0, gross - earningsBeforeSpecial);
 
       // Statutory Deductions
-      const basicLimit = 15000;
-      const epfEmployee = Math.round(Math.min(basic, basicLimit) * (salaryComponents.epfPercentage / 100));
-      const epfEmployer = Math.round(Math.min(basic, basicLimit) * 0.13); // Employer PF (13%)
+      const epfEmployee = basic > 15000 ? 1800 : Math.round(basic * (salaryComponents.epfPercentage / 100));
+      const epfEmployer = Math.round(Math.min(basic, 15000) * 0.13); // Employer PF (13%)
 
       const esicEmployee = gross <= 21000 ? Math.round(gross * (salaryComponents.esicPercentage / 100)) : 0;
       const esicEmployer = gross <= 21000 ? Math.round(gross * 0.0325) : 0; // Employer ESIC (3.25%)

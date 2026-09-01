@@ -66,7 +66,7 @@ export default function PayrollReportPage() {
 
   const calculateBasicSalary = (grossSalary: number) => Math.round((grossSalary || 0) * 0.5);
 
-  const calculateEPF = (basicSalary: number) => Math.round(Math.min(basicSalary || 0, 15000) * 0.12);
+  const calculateEPF = (basicSalary: number) => (basicSalary || 0) > 15000 ? 1800 : Math.round((basicSalary || 0) * 0.12);
   const calculateESIC = (grossSalary: number) => (grossSalary || 0) <= 21000 ? Math.round((grossSalary || 0) * 0.0075) : 0;
   const calculateProfessionalTax = () => 200;
 
